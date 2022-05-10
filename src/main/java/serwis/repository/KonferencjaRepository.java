@@ -7,4 +7,5 @@ import serwis.model.Konferencja;
 
 @Repository
 public interface KonferencjaRepository extends CrudRepository <Konferencja,Long> {
+
 }

@@ -21,7 +21,10 @@ public class Sciezka {
     @OneToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL,mappedBy = "sciezka")
 
     public Set<Prelekcja> prelekcja = new HashSet<Prelekcja>(0);
-
+    public Sciezka(){}
+    public Sciezka(String temat){
+        this.temat=temat;
+    }
 
     public long getId() {
         return id;

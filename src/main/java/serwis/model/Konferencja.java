@@ -19,7 +19,12 @@ public class Konferencja {
     @OneToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL,mappedBy = "konferencja")
 
     public Set<Sciezka> sciezka = new HashSet<Sciezka>(0);
-
+    public Konferencja(){}
+    public Konferencja(Date dataRozpoczecia,Date dataZakonczenia,Set<Sciezka> sciezka){
+        this.dataRozpoczecia=dataRozpoczecia;
+        this.dataZakonczenia=dataZakonczenia;
+        this.sciezka=sciezka;
+    }
     public long getId() {
         return id;
     }

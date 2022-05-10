@@ -23,7 +23,12 @@ public class Prelekcja {
     @JoinColumn(name = "sciezka_id", referencedColumnName = "id")
 
     public Sciezka sciezka;
-
+    public Prelekcja(){}
+    public Prelekcja(Date dataRozpoczecia,Date dataZakonczenia,Set<Uzytkownik> uzytkownik){
+        this.dataRozpoczecia=dataRozpoczecia;
+        this.dataZakonczenia=dataZakonczenia;
+        this.uzytkownik=uzytkownik;
+    }
     public void setSciezka(Sciezka sciezka) {
         this.sciezka = sciezka;
     }

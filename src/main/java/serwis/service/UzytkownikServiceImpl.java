@@ -1,6 +1,7 @@
 package serwis.service;
 
 import org.springframework.stereotype.Service;
+import serwis.model.Prelekcja;
 import serwis.model.Uzytkownik;
 import serwis.repository.UzytkownikRepository;
 @Service
@@ -30,6 +31,9 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
     @Override
     public void updateUzytkownik(Uzytkownik uzytkownik) {
         uzytkownikRepository.save(uzytkownik);
+    }
+    public void makeKonferencja(){
+       Prelekcja prelekcja1 = new Prelekcja()
     }
 
 }

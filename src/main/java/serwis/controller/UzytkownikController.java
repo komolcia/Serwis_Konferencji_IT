@@ -9,7 +9,7 @@ import serwis.service.UzytkownikService;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/konferencja")
+@RequestMapping("/api/uzytkownik")
 public class UzytkownikController {
     private final UzytkownikService uzytkownikService;
     public UzytkownikController(@Autowired @Valid UzytkownikService uzytkownikService){this.uzytkownikService=uzytkownikService;}
