@@ -4,7 +4,7 @@ import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,14 +16,14 @@ public class Konferencja {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @NotNull
-    private LocalDate dataRozpoczecia;
+    private LocalDateTime dataRozpoczecia;
     @NotNull
-    private LocalDate dataZakonczenia;
+    private LocalDateTime dataZakonczenia;
     @OneToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL,mappedBy = "konferencja")
 
     public Set<Sciezka> sciezka = new HashSet<Sciezka>(0);
     public Konferencja(){}
-    public Konferencja(LocalDate dataRozpoczecia,LocalDate dataZakonczenia,Set<Sciezka> sciezka){
+    public Konferencja(LocalDateTime dataRozpoczecia,LocalDateTime dataZakonczenia,Set<Sciezka> sciezka){
         this.dataRozpoczecia=dataRozpoczecia;
         this.dataZakonczenia=dataZakonczenia;
         this.sciezka=sciezka;
@@ -32,11 +32,11 @@ public class Konferencja {
         return id;
     }
 
-    public LocalDate getDataRozpoczecia() {
+    public LocalDateTime getDataRozpoczecia() {
         return dataRozpoczecia;
     }
 
-    public LocalDate getDataZakonczenia() {
+    public LocalDateTime getDataZakonczenia() {
         return dataZakonczenia;
     }
 
@@ -48,11 +48,11 @@ public class Konferencja {
         this.id = id;
     }
 
-    public void setDataRozpoczecia(LocalDate dataRozpoczecia) {
+    public void setDataRozpoczecia(LocalDateTime dataRozpoczecia) {
         this.dataRozpoczecia = dataRozpoczecia;
     }
 
-    public void setDataZakonczenia(LocalDate dataZakonczenia) {
+    public void setDataZakonczenia(LocalDateTime dataZakonczenia) {
         this.dataZakonczenia = dataZakonczenia;
     }
 
