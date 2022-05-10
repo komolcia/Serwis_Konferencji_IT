@@ -26,12 +26,28 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
     @Autowired
     PrelekcjaRepository prelekcjaRepository;
    public UzytkownikRepository uzytkownikRepository;
-   public UzytkownikServiceImpl(UzytkownikRepository uzytkownikRepository){this.uzytkownikRepository=uzytkownikRepository}
+   public UzytkownikServiceImpl(UzytkownikRepository uzytkownikRepository){this.uzytkownikRepository=uzytkownikRepository;}
     @Override
     public Uzytkownik addUzytkownik(Uzytkownik uzytkownik) {
+       Uzytkownik uzytkownik1=getUzytkownikByLogin(uzytkownik.getLogin());
+       Uzytkownik uzytkownik2= new Uzytkownik();
+       if(uzytkownik== uzytkownik1){
+           return uzytkownik2;
+       }
         return uzytkownikRepository.save(uzytkownik);
     }
 
+    @Override
+    public Uzytkownik getUzytkownikByLogin(String login) {
+       Uzytkownik found=new Uzytkownik();
+        Iterable<Uzytkownik> uzytkowniks=uzytkownikRepository.findAll();
+        for( Uzytkownik uzytkownik: uzytkowniks){
+            if(uzytkownik.getLogin()==login){
+                found=uzytkownik;
+            }
+        }
+        return found;
+    }
     @Override
     public Uzytkownik getUzytkownikById(long id) {
         return uzytkownikRepository.findById(id);

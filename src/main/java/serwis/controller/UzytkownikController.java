@@ -3,28 +3,36 @@ package serwis.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import serwis.exception.UzytkownikNotFoundException;
+import serwis.model.Konferencja;
 import serwis.model.Uzytkownik;
 import serwis.service.UzytkownikService;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/uzytkownik")
+@RequestMapping("/api")
 public class UzytkownikController {
     private final UzytkownikService uzytkownikService;
     public UzytkownikController(@Autowired @Valid UzytkownikService uzytkownikService){this.uzytkownikService=uzytkownikService;}
-    @PostMapping()
+    @PostMapping("/uzytkownik")
     Uzytkownik addUzytkownik(@RequestBody @Valid Uzytkownik uzytkownik){ return uzytkownikService.addUzytkownik(uzytkownik);}
-    @GetMapping()
+    @GetMapping("/uzytkownik")
     Iterable<Uzytkownik> getAll(){return uzytkownikService.getUzytkownik();}
-    @GetMapping("{id}")
+    @GetMapping("/uzytkownik/{id}")
     Uzytkownik getUzytkownikById(@PathVariable long id){
         Uzytkownik found=uzytkownikService.getUzytkownikById(id);
         if( found == null){
             throw new UzytkownikNotFoundException();
         }return uzytkownikService.getUzytkownikById(id);
     }
-    @DeleteMapping("{id}")
+    @GetMapping("/uzytkownik/{login}")
+    Uzytkownik getUzytkownikById(@PathVariable String login){
+        Uzytkownik found=uzytkownikService.getUzytkownikByLogin(login);
+        if( found == null){
+            throw new UzytkownikNotFoundException();
+        }return uzytkownikService.getUzytkownikByLogin(login);
+    }
+    @DeleteMapping("/uzytkownik/{id}")
     void deleteUzytkownik(@PathVariable long id){
         Uzytkownik found=uzytkownikService.getUzytkownikById(id);
         if( found == null){
@@ -32,8 +40,9 @@ public class UzytkownikController {
         }
         uzytkownikService.deleteUzytkownik(id);
     }
-    @PutMapping()
+    @PutMapping("/uzytkownik")
     void updateStudent(@RequestBody @Valid Uzytkownik uzytkownik){
         uzytkownikService.updateUzytkownik(uzytkownik);
     }
+
 }

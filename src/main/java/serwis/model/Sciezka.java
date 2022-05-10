@@ -22,7 +22,8 @@ public class Sciezka {
 
     public Set<Prelekcja> prelekcja = new HashSet<Prelekcja>(0);
     public Sciezka(){}
-    public Sciezka(String temat){
+    public Sciezka(String temat,Set<Prelekcja> prelekcja){
+        this.prelekcja=prelekcja;
         this.temat=temat;
     }
 
