@@ -2,7 +2,8 @@ package serwis.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,9 +14,9 @@ public class Prelekcja {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @NotNull
-    private Date dataRozpoczecia;
+    private LocalDate dataRozpoczecia;
     @NotNull
-    private Date dataZakonczenia;
+    private LocalDate dataZakonczenia;
     @OneToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL,mappedBy = "prelekcja")
 
     public Set<Uzytkownik> uzytkownik = new HashSet<Uzytkownik>(0);
@@ -24,7 +25,7 @@ public class Prelekcja {
 
     public Sciezka sciezka;
     public Prelekcja(){}
-    public Prelekcja(Date dataRozpoczecia,Date dataZakonczenia,Set<Uzytkownik> uzytkownik){
+    public Prelekcja(LocalDate dataRozpoczecia,LocalDate dataZakonczenia,Set<Uzytkownik> uzytkownik){
         this.dataRozpoczecia=dataRozpoczecia;
         this.dataZakonczenia=dataZakonczenia;
         this.uzytkownik=uzytkownik;
@@ -33,11 +34,11 @@ public class Prelekcja {
         this.sciezka = sciezka;
     }
 
-    public void setDataZakonczenia(Date dataZakonczenia) {
+    public void setDataZakonczenia(LocalDate dataZakonczenia) {
         this.dataZakonczenia = dataZakonczenia;
     }
 
-    public void setDataRozpoczecia(Date dataRozpoczecia) {
+    public void setDataRozpoczecia(LocalDate dataRozpoczecia) {
         this.dataRozpoczecia = dataRozpoczecia;
     }
 
@@ -45,7 +46,7 @@ public class Prelekcja {
         this.id = id;
     }
 
-    public Date getDataZakonczenia() {
+    public LocalDate getDataZakonczenia() {
         return dataZakonczenia;
     }
 
