@@ -1,7 +1,8 @@
 # Serwis_Konferencji_IT
 Uruchomienie:
 
-
+ source ~/.zshenv( dla mnie bo pracuje na macOs)
+ ./mvnw spring-boot:run
 Portal powinien obsługiwać następujące scenariusze:
 1. Użytkownik może obejrzeć plan konferencji. 
 Na początku trzeba dodać użytkownika:
