@@ -8,6 +8,7 @@ import serwis.model.Uzytkownik;
 import serwis.service.UzytkownikService;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
@@ -43,6 +44,14 @@ public class UzytkownikController {
     @PutMapping("/uzytkownik")
     void updateStudent(@RequestBody @Valid Uzytkownik uzytkownik){
         uzytkownikService.updateUzytkownik(uzytkownik);
+    }
+    @PutMapping("/uzytkownik/{login}/{id}")
+    Uzytkownik addPrelekcja(@PathVariable String login,@PathVariable long id) throws IOException {
+        return uzytkownikService.addPrelekcja(id,login);
+    }
+    @DeleteMapping("/uzytkownik/{login}/{id}")
+    Uzytkownik deletePrelekcja(@PathVariable String login,@PathVariable long id){
+        return uzytkownikService.deletePrelekcja(id,login);
     }
 
 }

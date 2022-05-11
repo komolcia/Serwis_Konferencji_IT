@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -23,14 +24,14 @@ public class Uzytkownik {
             joinColumns = @JoinColumn(name = "uzytkownik_id"),
             inverseJoinColumns = @JoinColumn(name = "prelekcje_id")
     )
-    Set<Prelekcja> prelekcja = new HashSet<Prelekcja>(0);
+    Set<Optional<Prelekcja>> prelekcja = new HashSet<java.util.Optional<Prelekcja>>(0);
 
 
-    public Set<Prelekcja> getPrelekcja() {
+    public Set<Optional<Prelekcja>> getPrelekcja() {
         return prelekcja;
     }
 
-    public void setPrelekcja(Set<Prelekcja> prelekcja) {
+    public void setPrelekcja(Set<Optional<Prelekcja>> prelekcja) {
         this.prelekcja = prelekcja;
     }
 

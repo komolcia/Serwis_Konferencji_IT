@@ -30,8 +30,21 @@ public class Prelekcja {
         this.dataZakonczenia=dataZakonczenia;
 
     }
+
+    public Set<Uzytkownik> getUzytkownik() {
+        return uzytkownik;
+    }
+
+    public void setUzytkownik(Set<Uzytkownik> uzytkownik) {
+        this.uzytkownik = uzytkownik;
+    }
+
     public void setSciezka(Sciezka sciezka) {
         this.sciezka = sciezka;
+    }
+
+    public LocalDateTime getDataRozpoczecia() {
+        return dataRozpoczecia;
     }
 
     public void setDataZakonczenia(LocalDateTime dataZakonczenia) {

@@ -16,4 +16,12 @@ public class KonferencjaController {
     Iterable<Konferencja> getKonferencja(@PathVariable long id){
         return konferencjaService.getKonferencja();
     }
+    @GetMapping("/zestawienie/wyklady")
+    String getPrelekcje(){
+        return konferencjaService.getWyklady();
+    }
+    @GetMapping("/zestawienie/temat")
+    String getSciezka(){
+        return konferencjaService.getTemat();
+    }
 }

@@ -11,10 +11,11 @@ import serwis.repository.PrelekcjaRepository;
 import serwis.repository.SciezkaRepository;
 import serwis.repository.UzytkownikRepository;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -67,6 +68,39 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
     public void updateUzytkownik(Uzytkownik uzytkownik) {
         uzytkownikRepository.save(uzytkownik);
     }
+
+    @Override
+    public Uzytkownik addPrelekcja(long id,String login) throws IOException {
+        Prelekcja prelekcja= prelekcjaRepository.findById(id);
+        Uzytkownik uzytkownik= getUzytkownikByLogin(login);
+        Set<Prelekcja> prelekcjaSet= uzytkownik.getPrelekcja();
+        for( Prelekcja prelekcja1: prelekcjaSet){
+            if(prelekcja1.getDataZakonczenia()=prelekcja.getDataZakonczenia() && prelekcja1.getDataRozpoczecia() == prelekcja.getDataRozpoczecia()){
+                return uzytkownik;
+            }
+        }
+        FileWriter myWriter = new FileWriter("powiadomienia.txt");
+        myWriter.write("Data wysłania:"+ LocalDateTime.now()+"Zapisałeś się na prelekcje.Do "+uzytkownik.getEmail());
+        myWriter.close();
+        prelekcjaSet.add(prelekcja);
+        uzytkownik.setPrelekcja(prelekcjaSet);
+        return uzytkownikRepository.save(uzytkownik);
+
+
+    }
+
+    @Override
+    public Uzytkownik deletePrelekcja(long id,String login) {
+        Prelekcja prelekcja= prelekcjaRepository.findById(id);
+        Uzytkownik uzytkownik= getUzytkownikByLogin(login);
+        Set<Prelekcja> prelekcjaSet= uzytkownik.getPrelekcja();
+        if(prelekcjaSet.contains(prelekcja)==true) {
+            prelekcjaSet.remove(prelekcja);
+        }
+        uzytkownik.setPrelekcja(prelekcjaSet);
+        return uzytkownikRepository.save(uzytkownik);
+    }
+
     public void makeKonferencja(){
       LocalDateTime data1= LocalDateTime.parse("2021-06-01T00:00:00");
         LocalDateTime data2= LocalDateTime.parse("2021-06-01T10:00:00");
