@@ -1,5 +1,6 @@
 package serwis.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
@@ -19,8 +20,8 @@ public class Konferencja {
     private LocalDateTime dataRozpoczecia;
     @NotNull
     private LocalDateTime dataZakonczenia;
-    @OneToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL,mappedBy = "konferencja")
-
+    @OneToMany(  cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(name="konferencja_sciezka")
     private Set<Sciezka> sciezka = new HashSet<Sciezka>(0);
     public Konferencja(){}
     public Konferencja(LocalDateTime dataRozpoczecia,LocalDateTime dataZakonczenia,Set<Sciezka> sciezka){

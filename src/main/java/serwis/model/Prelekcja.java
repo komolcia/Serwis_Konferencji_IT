@@ -25,8 +25,8 @@ public class Prelekcja {
 
     @ManyToMany(mappedBy = "prelekcja")
     private Set<Uzytkownik> uzytkownik = new HashSet<Uzytkownik>(0);
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "sciezka_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "sciezka_id")
 
     private Sciezka sciezka;
     public Prelekcja(){}

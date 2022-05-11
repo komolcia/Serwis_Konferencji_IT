@@ -30,6 +30,10 @@ public class KonferencjaServiceImpl implements KonferencjaService{
     public String getWyklady() {
         String zestawienie=new String();
         long ile=uzytkownikRepository.count();
+        if( ile == 0)
+        {
+            return "Nie ma zapisanych";
+        }
         Iterable<Konferencja>  konferencja=konferencjaRepository.findAll();
         for(Konferencja konferencja1: konferencja){
             Iterable<Sciezka> sciezkas=  konferencja1.getSciezka();
@@ -53,6 +57,10 @@ public class KonferencjaServiceImpl implements KonferencjaService{
     public String getTemat() {
         String zestawienie=new String();
         long ile=uzytkownikRepository.count();
+        if( ile == 0)
+        {
+            return "Nie ma zapisanych";
+        }
         Iterable<Konferencja>  konferencja=konferencjaRepository.findAll();
         for(Konferencja konferencja1: konferencja){
             Iterable<Sciezka> sciezkas=  konferencja1.getSciezka();

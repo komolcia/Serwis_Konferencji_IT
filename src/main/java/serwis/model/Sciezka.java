@@ -1,5 +1,9 @@
 package serwis.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
@@ -13,13 +17,13 @@ public class Sciezka {
     private long id;
     @NotNull
     private String temat;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "konferencja_id", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinColumn(name = "konferencja_id")
 
     private Konferencja konferencja;
 
-    @OneToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL,mappedBy = "sciezka")
-
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JoinTable(name="sciezka_prelekcja")
     private Set<Prelekcja> prelekcja = new HashSet<Prelekcja>(0);
     public Sciezka(){}
     public Sciezka(String temat,Set<Prelekcja> prelekcja){

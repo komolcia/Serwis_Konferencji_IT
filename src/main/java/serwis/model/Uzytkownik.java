@@ -15,6 +15,7 @@ public class Uzytkownik {
     private long id;
     @NotNull
     @Size(min=2,max=20,message = "Nazwa pomiędzy 2 do 20 znaków")
+    @Column(unique = true)
     private String login;
     @NotNull
     private String email;
