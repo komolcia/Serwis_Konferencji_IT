@@ -11,23 +11,26 @@ import java.util.Set;
 @Table(name = "uzytkownik")
 public class Uzytkownik {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotNull
     @Size(min=2,max=20,message = "Nazwa pomiędzy 2 do 20 znaków")
-    @Column(unique = true)
     private String login;
     @NotNull
     private String email;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "uzytkownik_prelekcje",
-            joinColumns = @JoinColumn(name = "uzytkownik_id"),
-            inverseJoinColumns = @JoinColumn(name = "prelekcje_id")
+    @ManyToMany(cascade = {CascadeType.PERSIST},fetch = FetchType.EAGER)
+    @JoinTable(name="uzytkownik_prelekcja",
+            joinColumns=@JoinColumn(name="uzytkownik_id"),
+            inverseJoinColumns=@JoinColumn(name="prelekcja_id")
     )
     private Set<Prelekcja> prelekcja = new HashSet<Prelekcja>(0);
-
-
+public Uzytkownik(){}
+public Uzytkownik(long id,String login,String email,Set<Prelekcja> prelekcja){
+    this.id=id;
+    this.login=login;
+    this.email=email;
+    this.prelekcja=prelekcja;
+}
     public Set<Prelekcja> getPrelekcja() {
         return prelekcja;
     }

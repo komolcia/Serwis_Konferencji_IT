@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-@Transactional
+
 public class UzytkownikServiceImpl implements  UzytkownikService {
     @Autowired
     SciezkaRepository sciezkaRepository;
@@ -32,13 +32,15 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
    @Autowired
    public UzytkownikServiceImpl(UzytkownikRepository uzytkownikRepository){this.uzytkownikRepository=uzytkownikRepository;}
     @Override
-    public Uzytkownik addUzytkownik(Uzytkownik uzytkownik) {
+    @Transactional
+    public String addUzytkownik(Uzytkownik uzytkownik) {
        Uzytkownik uzytkownik1=getUzytkownikByLogin(uzytkownik.getLogin());
-       Uzytkownik uzytkownik2= new Uzytkownik();
-       if(uzytkownik== uzytkownik1){
-           return uzytkownik2;
+
+       if(uzytkownik.getLogin().equals( uzytkownik1.getLogin())==true){
+           return "W bazie danych istnieje już użytkownik o danym loginie";
        }
-        return uzytkownikRepository.save(uzytkownik);
+        uzytkownikRepository.save(uzytkownik);
+       return "Udało się!";
     }
 
     @Override
@@ -46,30 +48,37 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
        Uzytkownik found=new Uzytkownik();
         Iterable<Uzytkownik> uzytkowniks=uzytkownikRepository.findAll();
         for( Uzytkownik uzytkownik: uzytkowniks){
-            if(uzytkownik.getLogin()==login){
+            if(uzytkownik.getLogin().equals(login)==true){
                 found=uzytkownik;
             }
         }
         return found;
     }
     @Override
+    @Transactional
     public Uzytkownik getUzytkownikById(long id) {
         return uzytkownikRepository.findById(id);
     }
 
     @Override
+    @Transactional
     public Iterable<Uzytkownik> getUzytkownik() {
         return uzytkownikRepository.findAll();
     }
 
     @Override
+    @Transactional
     public void deleteUzytkownik(long id) {
         uzytkownikRepository.deleteById(id);
     }
 
     @Override
-    public void updateUzytkownik(Uzytkownik uzytkownik) {
-        uzytkownikRepository.save(uzytkownik);
+    @Transactional
+    public void updateUzytkownik(String login,String email) {
+        Uzytkownik uzytkownik= getUzytkownikByLogin(login);
+        uzytkownik.setEmail(email);
+
+       uzytkownikRepository.save(uzytkownik);
     }
 
     @Override
@@ -78,15 +87,24 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
         Uzytkownik uzytkownik= getUzytkownikByLogin(login);
         Set<Prelekcja> prelekcjaSet= uzytkownik.getPrelekcja();
         for( Prelekcja prelekcja1: prelekcjaSet){
-            if(prelekcja1.getDataZakonczenia()==prelekcja.getDataZakonczenia() && prelekcja1.getDataRozpoczecia() == prelekcja.getDataRozpoczecia()){
+            if(prelekcja1.getDataZakonczenia().equals(prelekcja.getDataZakonczenia())==true && prelekcja1.getDataRozpoczecia().equals(prelekcja.getDataRozpoczecia())==true){
                 return uzytkownik;
             }
         }
-        FileWriter myWriter = new FileWriter("powiadomienia.txt");
-        myWriter.write("Data wysłania:"+ LocalDateTime.now()+"Zapisałeś się na prelekcje.Do "+uzytkownik.getEmail());
+        FileWriter myWriter = new FileWriter("powiadomienia.txt",true);
+        myWriter.write("Data wysłania:"+ LocalDateTime.now()+". Zapisałeś się na prelekcje. Do "+uzytkownik.getEmail());
         myWriter.close();
         prelekcjaSet.add(prelekcja);
+        Set<Uzytkownik> uzytkownikSet=prelekcja.getUzytkownik();
+        if (uzytkownikSet.size()>=5){
+            return uzytkownik;
+        }
+
+
         uzytkownik.setPrelekcja(prelekcjaSet);
+        uzytkownikSet.add(uzytkownik);
+        prelekcja.setUzytkownik(uzytkownikSet);
+        prelekcjaRepository.save(prelekcja);
         return uzytkownikRepository.save(uzytkownik);
 
 
@@ -97,13 +115,16 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
         Prelekcja prelekcja= prelekcjaRepository.findById(id);
         Uzytkownik uzytkownik= getUzytkownikByLogin(login);
         Set<Prelekcja> prelekcjaSet= uzytkownik.getPrelekcja();
-        if(prelekcjaSet.contains(prelekcja)==true) {
-            prelekcjaSet.remove(prelekcja);
-        }
-        uzytkownik.setPrelekcja(prelekcjaSet);
+        prelekcjaSet.remove(prelekcja);
+
+        uzytkownik.getPrelekcja().remove(prelekcja);
+       Set<Uzytkownik> uzytkowniks=  prelekcja.getUzytkownik();
+       uzytkowniks.remove(uzytkownik);
+       prelekcja.getUzytkownik().remove(uzytkownik);
+       prelekcjaRepository.save(prelekcja);
         return uzytkownikRepository.save(uzytkownik);
     }
-
+    @Transactional
     public void makeKonferencja(){
       LocalDateTime data1= LocalDateTime.parse("2021-06-01T00:00:00");
         LocalDateTime data2= LocalDateTime.parse("2021-06-01T10:00:00");

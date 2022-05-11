@@ -1,5 +1,6 @@
 package serwis.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -13,17 +14,19 @@ import java.util.Set;
 
 @Entity
 @Table(name = "prelekcja")
-@JsonIgnoreProperties({ "uzytkownik" })
+
 public class Prelekcja {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotNull
     private LocalDateTime dataRozpoczecia;
     @NotNull
     private LocalDateTime dataZakonczenia;
 
-    @ManyToMany(mappedBy = "prelekcja")
+    @ManyToMany( mappedBy ="prelekcja",cascade = {CascadeType.PERSIST},fetch = FetchType.EAGER )
+    @JsonIgnore
+
     private Set<Uzytkownik> uzytkownik = new HashSet<Uzytkownik>(0);
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "sciezka_id")
