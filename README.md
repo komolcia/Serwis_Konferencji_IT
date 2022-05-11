@@ -8,7 +8,7 @@ Na początku trzeba dodać użytkownika:
 POST http://localhost:8080/api/uzytkownik
 {
     "login": "komolcia",
-    "email":"komolcia@02.com"
+    "email":"komolcia@gmail.com"
    
 }
 GET http://localhost:8080/api/plan
