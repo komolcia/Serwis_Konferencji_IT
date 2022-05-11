@@ -82,9 +82,14 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
     }
 
     @Override
-    public Uzytkownik addPrelekcja(long id,String login) throws IOException {
+    public Uzytkownik addPrelekcja(long id,String login,String email) throws IOException {
         Prelekcja prelekcja= prelekcjaRepository.findById(id);
         Uzytkownik uzytkownik= getUzytkownikByLogin(login);
+        if(uzytkownik.getEmail().equals(email)==true){
+
+        }else{
+            return uzytkownik;
+        }
         Set<Prelekcja> prelekcjaSet= uzytkownik.getPrelekcja();
         for( Prelekcja prelekcja1: prelekcjaSet){
             if(prelekcja1.getDataZakonczenia().equals(prelekcja.getDataZakonczenia())==true && prelekcja1.getDataRozpoczecia().equals(prelekcja.getDataRozpoczecia())==true){

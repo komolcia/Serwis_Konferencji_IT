@@ -74,9 +74,9 @@ public class KonferencjaServiceImpl implements KonferencjaService{
                     for(Uzytkownik uzytkownik: uzytkowniks){
                         ileChodzi+=1;
                     }
-                    zestawienie+="Na prelekcje od "+prelekcja.getDataRozpoczecia()+" do "+prelekcja.getDataZakonczenia()+ " o temacie"+ sciezka.getTemat()+ " ma zestawienie"+ileChodzi/ile+".";
+                    zestawienie+="Na prelekcje od "+prelekcja.getDataRozpoczecia()+" do "+prelekcja.getDataZakonczenia()+ " o temacie"+ sciezka.getTemat()+ " ma zestawienie "+(ileChodzi*100/ile) +" procent.\n";
                 }
-                zestawienie+="Na  sciezke o temacie"+ sciezka.getTemat()+ " ma zestawienie"+ileChodzi/ile+".";
+                zestawienie+="Na  sciezke o temacie"+ sciezka.getTemat()+ " ma zestawienie "+(ileChodzi*100/ile)+"procent.\n";
             }
         }
         return zestawienie;

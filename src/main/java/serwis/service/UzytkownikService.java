@@ -12,7 +12,7 @@ public interface UzytkownikService {
     Iterable<Uzytkownik> getUzytkownik();
     void deleteUzytkownik(long id);
     void updateUzytkownik(String login,String email);
-    Uzytkownik addPrelekcja(long id, String login) throws IOException;
+    Uzytkownik addPrelekcja(long id, String login,String email) throws IOException;
     Uzytkownik deletePrelekcja(long id,String login);
 
 }

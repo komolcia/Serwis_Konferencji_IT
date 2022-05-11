@@ -45,9 +45,9 @@ public class UzytkownikController {
     void updateStudent(@PathVariable String login,@PathVariable String email){
         uzytkownikService.updateUzytkownik(login,email);
     }
-    @GetMapping("/uzytkownik/{login}/{id}")
-    Uzytkownik addPrelekcja(@PathVariable String login,@PathVariable long id) throws IOException {
-        return uzytkownikService.addPrelekcja(id,login);
+    @GetMapping("/uzytkownik/{login}/{email}/{id}")
+    Uzytkownik addPrelekcja(@PathVariable String login,@PathVariable String email,@PathVariable long id) throws IOException {
+        return uzytkownikService.addPrelekcja(id,login,email);
     }
     @GetMapping("/uzytkownik/{login}/usun/{id}")
     Uzytkownik deletePrelekcja(@PathVariable String login,@PathVariable long id){
