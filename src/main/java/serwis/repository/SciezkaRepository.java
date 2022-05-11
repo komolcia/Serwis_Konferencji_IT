@@ -6,4 +6,5 @@ import serwis.model.Sciezka;
 
 @Repository
 public interface SciezkaRepository extends CrudRepository<Sciezka,Long> {
+    Sciezka findById(long id);
 }

@@ -18,20 +18,20 @@ public class Uzytkownik {
     private String login;
     @NotNull
     private String email;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "uzytkownik_prelekcje",
             joinColumns = @JoinColumn(name = "uzytkownik_id"),
             inverseJoinColumns = @JoinColumn(name = "prelekcje_id")
     )
-    Set<Optional<Prelekcja>> prelekcja = new HashSet<java.util.Optional<Prelekcja>>(0);
+    private Set<Prelekcja> prelekcja = new HashSet<Prelekcja>(0);
 
 
-    public Set<Optional<Prelekcja>> getPrelekcja() {
+    public Set<Prelekcja> getPrelekcja() {
         return prelekcja;
     }
 
-    public void setPrelekcja(Set<Optional<Prelekcja>> prelekcja) {
+    public void setPrelekcja(Set<Prelekcja> prelekcja) {
         this.prelekcja = prelekcja;
     }
 

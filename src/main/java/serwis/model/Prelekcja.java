@@ -1,5 +1,9 @@
 package serwis.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -9,6 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "prelekcja")
+@JsonIgnoreProperties({ "uzytkownik" })
 public class Prelekcja {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,19 +22,20 @@ public class Prelekcja {
     private LocalDateTime dataRozpoczecia;
     @NotNull
     private LocalDateTime dataZakonczenia;
-    @OneToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL,mappedBy = "prelekcja")
 
-    public Set<Uzytkownik> uzytkownik = new HashSet<Uzytkownik>(0);
+    @ManyToMany(mappedBy = "prelekcja")
+    private Set<Uzytkownik> uzytkownik = new HashSet<Uzytkownik>(0);
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sciezka_id", referencedColumnName = "id")
 
-    public Sciezka sciezka;
+    private Sciezka sciezka;
     public Prelekcja(){}
     public Prelekcja(LocalDateTime dataRozpoczecia,LocalDateTime dataZakonczenia){
         this.dataRozpoczecia=dataRozpoczecia;
         this.dataZakonczenia=dataZakonczenia;
 
     }
+
 
     public Set<Uzytkownik> getUzytkownik() {
         return uzytkownik;
@@ -65,5 +71,16 @@ public class Prelekcja {
 
     public long getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Prelekcja{" +
+                "id=" + id +
+                ", dataRozpoczecia=" + dataRozpoczecia +
+                ", dataZakonczenia=" + dataZakonczenia +
+                ", uzytkownik=" + uzytkownik +
+                ", sciezka=" + sciezka +
+                '}';
     }
 }

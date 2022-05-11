@@ -1,6 +1,7 @@
 package serwis.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import serwis.model.Konferencja;
 import serwis.model.Prelekcja;
 import serwis.model.Sciezka;
@@ -9,7 +10,10 @@ import serwis.repository.KonferencjaRepository;
 import serwis.repository.PrelekcjaRepository;
 import serwis.repository.UzytkownikRepository;
 
+import javax.transaction.Transactional;
 
+@Service
+@Transactional
 public class KonferencjaServiceImpl implements KonferencjaService{
     @Autowired
     UzytkownikRepository uzytkownikRepository;

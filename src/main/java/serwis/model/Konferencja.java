@@ -21,7 +21,7 @@ public class Konferencja {
     private LocalDateTime dataZakonczenia;
     @OneToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL,mappedBy = "konferencja")
 
-    public Set<Sciezka> sciezka = new HashSet<Sciezka>(0);
+    private Set<Sciezka> sciezka = new HashSet<Sciezka>(0);
     public Konferencja(){}
     public Konferencja(LocalDateTime dataRozpoczecia,LocalDateTime dataZakonczenia,Set<Sciezka> sciezka){
         this.dataRozpoczecia=dataRozpoczecia;

@@ -6,4 +6,5 @@ import serwis.model.Uzytkownik;
 
 @Repository
 public interface UzytkownikRepository extends CrudRepository<Uzytkownik,Long> {
+    Uzytkownik findById(long id);
 }

@@ -16,11 +16,11 @@ public class Sciezka {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "konferencja_id", referencedColumnName = "id")
 
-    public Konferencja konferencja;
+    private Konferencja konferencja;
 
     @OneToMany(fetch = FetchType.EAGER,  cascade = CascadeType.ALL,mappedBy = "sciezka")
 
-    public Set<Prelekcja> prelekcja = new HashSet<Prelekcja>(0);
+    private Set<Prelekcja> prelekcja = new HashSet<Prelekcja>(0);
     public Sciezka(){}
     public Sciezka(String temat,Set<Prelekcja> prelekcja){
         this.prelekcja=prelekcja;

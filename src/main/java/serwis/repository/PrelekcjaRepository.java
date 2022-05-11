@@ -6,4 +6,5 @@ import serwis.model.Prelekcja;
 
 @Repository
 public interface PrelekcjaRepository extends CrudRepository<Prelekcja,Long> {
+    Prelekcja findById(long id);
 }

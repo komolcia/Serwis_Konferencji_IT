@@ -12,8 +12,8 @@ import serwis.service.KonferencjaService;
 public class KonferencjaController {
     public final KonferencjaService konferencjaService;
     public KonferencjaController(KonferencjaService konferencjaService){this.konferencjaService=konferencjaService;}
-    @GetMapping("/plan/{id}")
-    Iterable<Konferencja> getKonferencja(@PathVariable long id){
+    @GetMapping("/plan")
+    Iterable<Konferencja> getKonferencja(){
         return konferencjaService.getKonferencja();
     }
     @GetMapping("/zestawienie/wyklady")

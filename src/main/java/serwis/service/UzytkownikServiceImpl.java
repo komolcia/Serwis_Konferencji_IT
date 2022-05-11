@@ -11,6 +11,7 @@ import serwis.repository.PrelekcjaRepository;
 import serwis.repository.SciezkaRepository;
 import serwis.repository.UzytkownikRepository;
 
+import javax.transaction.Transactional;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@Transactional
 public class UzytkownikServiceImpl implements  UzytkownikService {
     @Autowired
     SciezkaRepository sciezkaRepository;
@@ -27,6 +29,7 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
     @Autowired
     PrelekcjaRepository prelekcjaRepository;
    public UzytkownikRepository uzytkownikRepository;
+   @Autowired
    public UzytkownikServiceImpl(UzytkownikRepository uzytkownikRepository){this.uzytkownikRepository=uzytkownikRepository;}
     @Override
     public Uzytkownik addUzytkownik(Uzytkownik uzytkownik) {
@@ -75,7 +78,7 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
         Uzytkownik uzytkownik= getUzytkownikByLogin(login);
         Set<Prelekcja> prelekcjaSet= uzytkownik.getPrelekcja();
         for( Prelekcja prelekcja1: prelekcjaSet){
-            if(prelekcja1.getDataZakonczenia()=prelekcja.getDataZakonczenia() && prelekcja1.getDataRozpoczecia() == prelekcja.getDataRozpoczecia()){
+            if(prelekcja1.getDataZakonczenia()==prelekcja.getDataZakonczenia() && prelekcja1.getDataRozpoczecia() == prelekcja.getDataRozpoczecia()){
                 return uzytkownik;
             }
         }
@@ -110,11 +113,14 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
         LocalDateTime data6= LocalDateTime.parse("2021-06-02T14:00:00");
         LocalDateTime data7= LocalDateTime.parse("2021-06-01T15:45:00");
         LocalDateTime data8= LocalDateTime.parse("2021-06-02T00:00:00");
-        Set<Uzytkownik> uzytkownik= new HashSet<>();
+
         Prelekcja prelekcja1 = new Prelekcja(data2,data3);
         Prelekcja prelekcja2 = new Prelekcja(data4,data5);
         Prelekcja prelekcja3 = new Prelekcja(data6,data7);
         Set<Prelekcja> prelekcjaSet= new HashSet<>();
+        prelekcjaRepository.save(prelekcja1);
+        prelekcjaRepository.save(prelekcja2);
+        prelekcjaRepository.save(prelekcja3);
         prelekcjaSet.add(prelekcja1);
         prelekcjaSet.add(prelekcja2);
         prelekcjaSet.add(prelekcja3);
@@ -125,13 +131,12 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
         sciezkaSet.add(sciezka1);
         sciezkaSet.add(sciezka2);
         sciezkaSet.add(sciezka3);
-        Konferencja konferencja=new Konferencja(data1,data8,sciezkaSet);
-        prelekcjaRepository.save(prelekcja1);
-        prelekcjaRepository.save(prelekcja2);
-        prelekcjaRepository.save(prelekcja3);
         sciezkaRepository.save(sciezka1);
         sciezkaRepository.save(sciezka2);
         sciezkaRepository.save(sciezka3);
+        Konferencja konferencja=new Konferencja(data1,data8,sciezkaSet);
+
+
         konferencjaRepository.save(konferencja);
 
     }
