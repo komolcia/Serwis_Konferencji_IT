@@ -45,11 +45,11 @@ public class UzytkownikController {
     void updateStudent(@PathVariable String login,@PathVariable String email){
         uzytkownikService.updateUzytkownik(login,email);
     }
-    @GetMapping("/uzytkownik/{login}/{email}/{id}")
+    @GetMapping("/{login}/{email}/{id}")
     Uzytkownik addPrelekcja(@PathVariable String login,@PathVariable String email,@PathVariable long id) throws IOException {
         return uzytkownikService.addPrelekcja(id,login,email);
     }
-    @GetMapping("/uzytkownik/{login}/usun/{id}")
+    @GetMapping("/{login}/usun/{id}")
     Uzytkownik deletePrelekcja(@PathVariable String login,@PathVariable long id){
         return uzytkownikService.deletePrelekcja(id,login);
     }

@@ -13,12 +13,12 @@ public class KonferencjaController {
     Iterable<Konferencja> getKonferencja(){
         return konferencjaService.getKonferencja();
     }
-    @GetMapping("/zestawienie/wyklady")
+    @GetMapping("/wyklady")
     @ResponseBody
     String getPrelekcje(){
         return konferencjaService.getWyklady();
     }
-    @GetMapping("/zestawienie/temat")
+    @GetMapping("/temat")
     @ResponseBody
     String getSciezka(){
         return konferencjaService.getTemat();

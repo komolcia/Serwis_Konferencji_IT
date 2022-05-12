@@ -69,7 +69,12 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
     @Override
     @Transactional
     public void deleteUzytkownik(long id) {
-        uzytkownikRepository.deleteById(id);
+       Uzytkownik uzytkownik=getUzytkownikById(id);
+        Set<Prelekcja> prelekcjaSet= uzytkownik.getPrelekcja();
+        for(Prelekcja prelekcja: prelekcjaSet) {
+            prelekcja.getUzytkownik().remove(uzytkownik);
+        }
+       uzytkownikRepository.deleteById(id);
     }
 
     @Override
@@ -97,7 +102,7 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
             }
         }
         FileWriter myWriter = new FileWriter("powiadomienia.txt",true);
-        myWriter.write("Data wysłania:"+ LocalDateTime.now()+". Zapisałeś się na prelekcje. Do "+uzytkownik.getEmail());
+        myWriter.write("Data wysłania: "+ LocalDateTime.now()+". Zapisałeś się na prelekcje. Do "+uzytkownik.getEmail()+"\n");
         myWriter.close();
         prelekcjaSet.add(prelekcja);
         Set<Uzytkownik> uzytkownikSet=prelekcja.getUzytkownik();
