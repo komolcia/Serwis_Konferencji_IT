@@ -74,6 +74,8 @@ zestawienie ścieżek tematycznych wg zainteresowania (procentowy udział)
     
 GET http://localhost:8080/api/temat
 
+Tutaj pojawia się zestawienie bazowane na ilości zapisanych na jakiekolwiek prelekcje, ponieważ gdy ta sama osoba zapisze się na tą samą ścieżkę 3 razy(bo może, ale wtedy już nie pójdzie na inne ścieżki bo są w tych samych godzinach) wyniki są niepoprawne i pojawiają się powyżej 100%
+
 Dodatkowe funkcjonalnści:
 1. Znalezienie użytkownika poprzez id.
 
@@ -84,3 +86,4 @@ GET http://localhost:8080/api/uzytkownik/1
 DELETE http://localhost:8080/api/uzytkownik/1
 
 
+Jeśli pojawia się użytkownik z niezmienionymi danymi to oznacza że jakaś operacja się nie powiodła np. jeśli na prelekcje zapisanych jest już 5 użytkowników

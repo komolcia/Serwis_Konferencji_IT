@@ -61,7 +61,26 @@ public class KonferencjaServiceImpl implements KonferencjaService{
         {
             return "Nie ma zapisanych";
         }
+        long ilosc=0;
         Iterable<Konferencja>  konferencja=konferencjaRepository.findAll();
+        for(Konferencja konferencja1: konferencja){
+            Iterable<Sciezka> sciezkas=  konferencja1.getSciezka();
+
+            for(Sciezka sciezka: sciezkas){
+
+                Iterable<Prelekcja> prelekcjas= sciezka.getPrelekcja();
+                for (Prelekcja prelekcja: prelekcjas){
+                    Iterable<Uzytkownik> uzytkowniks=prelekcja.getUzytkownik();
+
+                    for(Uzytkownik uzytkownik: uzytkowniks){
+                        ilosc+=1;
+                    }
+
+                }
+
+            }
+        }
+
         for(Konferencja konferencja1: konferencja){
             Iterable<Sciezka> sciezkas=  konferencja1.getSciezka();
 
@@ -76,7 +95,7 @@ public class KonferencjaServiceImpl implements KonferencjaService{
                     }
 
                 }
-                zestawienie+="Na  sciezke o temacie "+ sciezka.getTemat()+ " ma zestawienie "+(ileChodzi*100/ile)+" procent.\n";
+                zestawienie+="Na  sciezke o temacie "+ sciezka.getTemat()+ " ma zestawienie "+(ileChodzi*100/ilosc)+" procent.\n";
             }
         }
         return zestawienie;

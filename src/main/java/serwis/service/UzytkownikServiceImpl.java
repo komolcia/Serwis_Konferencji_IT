@@ -89,7 +89,13 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
     @Override
     public Uzytkownik addPrelekcja(long id,String login,String email) throws IOException {
         Prelekcja prelekcja= prelekcjaRepository.findById(id);
+        Set<Uzytkownik> uzytkownikSet=prelekcja.getUzytkownik();
         Uzytkownik uzytkownik= getUzytkownikByLogin(login);
+
+        if (uzytkownikSet.size()>=5){
+            return uzytkownik;
+        }
+
         if(uzytkownik.getEmail().equals(email)==true){
 
         }else{
@@ -105,10 +111,7 @@ public class UzytkownikServiceImpl implements  UzytkownikService {
         myWriter.write("Data wysłania: "+ LocalDateTime.now()+". Zapisałeś się na prelekcje. Do "+uzytkownik.getEmail()+"\n");
         myWriter.close();
         prelekcjaSet.add(prelekcja);
-        Set<Uzytkownik> uzytkownikSet=prelekcja.getUzytkownik();
-        if (uzytkownikSet.size()>=5){
-            return uzytkownik;
-        }
+
 
 
         uzytkownik.setPrelekcja(prelekcjaSet);
